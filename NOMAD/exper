@@ -1,0 +1,67 @@
+30x8 - 0.07428063452243805 - start thrashing at 0.085-2
+30x8 - 0.07438468933105469
+50x8 - 0.07103526592254639
+100x2+50x6 - 0.07020275294780731
+100x7+50x1 - 0.07011952251195908
+adam    0.06920970231294632
+sgd 0.01  0.0886642262339592 / Test  rmsle :  0.06573297828435898
+0.0846 0.06264302879571915
+
+loss: 0.1370 - rmsle: 0.0737 - val_loss: 0.1128 - val_rmsle: 0.0670
+loss: 0.2155 - rmsle: 0.1029 - val_loss: 0.1315 - val_rmsle: 0.0745
+loss: 0.1093 - rmsle: 0.0565 - val_loss: 0.0849 - val_rmsle: 0.0460
+
+loss: 0.0885 - rmsle: 0.0456 - val_loss: 0.0817 - val_rmsle: 0.0434 -lb 0.0652
+
+bad overfit
+remove 3 layers 
+reduce to 2,200 epoch
+
+loss: 0.1166 - rmsle: 0.0573 - val_loss: 0.0837 - val_rmsle: 0.0442 - lb  0.0598
+
+still overfitting
+remove 2 layers
+reduce to 1,800 epoch
+
+loss: 0.1149 - rmsle: 0.0563 - val_loss: 0.0869 - val_rmsle: 0.0456 - lb 0.0605
+slightly worse 
+go up to 9 layers
+cut neurons/layer in half to 50
+2,200 epoch
+
+loss: 0.1083 - rmsle: 0.0536 - val_loss: 0.0939 - val_rmsle: 0.0477
+7x140
+
+note 7x100 drop=0.2 adam(0.001) yielded 0.0598
+and  7x140 drop=0.2 adam(0.001) yielded 0.0599
+but  7x70  drop=0.2 adam(0.001) yielded 0.0632
+     5x100                      yielded 0.0605
+all < 3,000 epoch
+What about 9x100?
+drop=0.1?
+
+
+so far
+best models:
+1 cat
+gbm+xgb+cat + lin regression stack
+cat + cat + cat + lin regression stack
+single xgb 
+7 * 100 adam
+
+loss: 0.1125 - rmsle: 0.0557 - val_loss: 0.0888 - val_rmsle: 0.0460
+loss: 0.1264 - rmsle: 0.0599 - val_loss: 0.1058 - val_rmsle: 0.0524
+loss: 0.1649 - rmsle: 0.0773 - val_loss: 0.1020 - val_rmsle: 0.0553
+loss: 0.1141 - rmsle: 0.0540 - val_loss: 0.1114 - val_rmsle: 0.0552
+loss: 0.1017 - rmsle: 0.0494 - val_loss: 0.0914 - val_rmsle: 0.0464
+loss: 0.0807 - rmsle: 0.0402 - val_loss: 0.0930 - val_rmsle: 0.0466
+loss: 0.0999 - rmsle: 0.0480 - val_loss: 0.1008 - val_rmsle: 0.0486
+loss: 0.0908 - rmsle: 0.0451 - val_loss: 0.0897 - val_rmsle: 0.0470
+loss: 0.1024 - rmsle: 0.0469 - val_loss: 0.0886 - val_rmsle: 0.0462
+loss: 0.0917 - rmsle: 0.0454 - val_loss: 0.0974 - val_rmsle: 0.0476
+loss: 0.0835 - rmsle: 0.0426 - val_loss: 0.0894 - val_rmsle: 0.0472
+loss: 0- rmsle: 0.0457 - val_loss.0927 : 0.0877 - val_rmsle: 0.0461
+
+loss: 0.0963 - rmsle: 0.0484 - val_loss: 0.0951 - val_rmsle: 0.0506
+loss: 0.0756 - rmsle: 0.0381 - val_loss: 0.0935 - val_rmsle: 0.0487
+

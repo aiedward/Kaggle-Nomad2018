@@ -1,0 +1,39 @@
+* Stopped using RMSLE, exploded
+
+1.
+300 .5
+300 *
+200
+200
+100
+100
+50
+50
+1
+
+
+
+lr=0.0001
+decay=1e-7
+momentum=0.9
+nesterov=True
+epoch=10000
+batch_size=1800
+
+300 x 5
+200 x 5
+100 x 5
+50 x 5
+1 x 1
+
+0.042263377568451686
+
+0.0765
+
+loss: 0.0339 - rmsle: 0.0280
+loss: 0.2514 - rmsle: 0.0877
+
+loss: 0.0304 - rmsle: 0.0249
+loss: 0.1811 - rmsle: 0.0645
+0.03584223471116275
+0.0625,

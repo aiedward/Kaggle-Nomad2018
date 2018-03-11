@@ -1,0 +1,26 @@
+EDA in R, ggplot2
+Data transformation pipeline
+GradientBoostedRegressors, XGBoost, Catboost, LightGBM models
+Hand tuned parameters and used Bayesian Search to auto-tune models
+Ensemble of trees (stack)
+DNN in tensorflow
+DNN in keras
+
+Goals
+Ensemble of trees/dnn's
+Feature extraction with pca/autoencoders
+
+- Constructed very deep feedforward neural networks using tensorflow 
+  and Keras then trained them on AWS Nvidia Tesla V100 graphics cards 
+- Implemented ensembles of gradient boosted decision trees with
+  sklearn, catboost, xgboost, and lightgbm
+- Trained models using manual and automatic hyperparameter tuning with
+  skopt and Bayesian search
+- Measured correlation between model predictions and built stacked 
+  ensembles with least correlated estimators and mlxtend
+- Completed EDA using R and ggplot2 to develop insights into material
+  properties of transparent conductors
+- Developed full data pipeline for automatic data transformation and
+  feature engineering
+
+  

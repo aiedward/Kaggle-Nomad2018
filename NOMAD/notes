@@ -1,0 +1,411 @@
+lightgbm_1.csv (100 tree/10,000 boost): 
+    'boosting_type': 'gbdt',
+    'objective': 'regression',
+    'metric': 'rmse',
+    'num_leaves': 100,
+    'learning_rate': 0.01,
+    'feature_fraction': 0.9,
+    'bagging_fraction': 0.8,
+    'bagging_freq': 5,
+    'verbose': 0
+    
+formation training's rmse: 0.0217973
+bandgap training's rmse: 0.0975034
+
+formation model's RMSE: 0.0497594390352
+bandgap model's RMSE: 0.26462652647
+
+formation model's RMLSE: 0.0395396037198
+bandgap model's RMLSE: 0.103432789801
+
+* Major overfitting
+
+lightgbm_2.csv (100 tree/10,000 boost): 
+    'boosting_type': 'dart',
+    'objective': 'regression',
+    'metric': 'rmse',
+    'num_leaves': 100,
+    'learning_rate': 0.01,
+    'feature_fraction': 0.9,
+    'bagging_fraction': 0.8,
+    'bagging_freq': 5,
+    'verbose': 0
+    
+formation training's rmse: 0.0233998
+bandgap training's rmse: 0.113629
+
+formation model's RMSE: 0.0482535408358
+bandgap model's RMSE: 0.256023773515
+
+formation model's RMLSE: 0.0383325968227
+bandgap model's RMLSE: 0.0974625003321
+
+* Realized num_iterations not num_boost_round controls number of trees...
+
+lightgbm_3.csv (1000 tree/100 boost): 
+    'boosting_type': 'dart',
+    'objective': 'regression',
+    'metric': 'rmse',
+    'num_leaves': 100,
+    'num_iterations': 1000,
+    'learning_rate': 0.01,
+    'feature_fraction': 0.9,
+    'bagging_fraction': 0.8,
+    'bagging_freq': 5,
+    'verbose': 0
+    
+formation training's rmse: 0.0508305
+bandgap training's rmse: 1.04206
+
+formation model's RMSE: 0.0606033949459
+bandgap model's RMSE: 1.01221139651
+
+formation model's RMLSE: 0.0483738786649
+bandgap model's RMLSE: 0.314125254117
+
+* Bad results, better generalization though. Increase boost rounds to 1,000 from 100. Underfit bandgap.
+
+lightgbm_4.csv (1000 tree/1000 boost): 
+    'boosting_type': 'dart',
+    'objective': 'regression',
+    'metric': 'rmse',
+    'num_leaves': 100,
+    'num_iterations': 1000,
+    'learning_rate': 0.01,
+    'feature_fraction': 0.9,
+    'bagging_fraction': 0.8,
+    'bagging_freq': 5,
+    'verbose': 0
+    
+formation training's rmse: 0.0508305
+bandgap training's rmse: 0.461868
+
+formation model's RMSE: 0.0606033949459
+bandgap model's RMSE: 0.481415068098
+
+formation model's RMLSE: 0.0483738786649
+bandgap model's RMLSE: 0.153830256087
+
+* Much better on bandgap (maybe its higher variance than formation?), keeping generalization tight.
+Had too few trees previously and massively overfit them. 
+Want to increase trees to 5k now. 
+
+lightgbm_best.csv (5000 tree/1000 boost): 
+    'boosting_type': 'dart',
+    'objective': 'regression',
+    'metric': 'rmse',
+    'num_leaves': 100,
+    'num_iterations': 1000,
+    'learning_rate': 0.01,
+    'feature_fraction': 0.9,
+    'bagging_fraction': 0.8,
+    'bagging_freq': 5,
+    'verbose': 0
+    
+formation training's rmse: 0.0259901 
+bandgap training's rmse: 0.461868
+
+formation model's RMSE: 0.0474717908996
+bandgap model's RMSE: 0.481415068098
+
+formation model's RMLSE: 0.0377276443012
+bandgap model's RMLSE: 0.153830256087
+
+* Overfitting formation now. Increasing trees to 10k.
+
+lightgbm_best2.csv (10,000 tree/1000 boost): 
+    'boosting_type': 'dart',
+    'objective': 'regression',
+    'metric': 'rmse',
+    'num_leaves': 100,
+    'num_iterations': 1000,
+    'learning_rate': 0.01,
+    'feature_fraction': 0.9,
+    'bagging_fraction': 0.8,
+    'bagging_freq': 5,
+    'verbose': 0
+    
+formation training's rmse: 0.0233998 
+bandgap training's rmse: 0.461868 (wat?)
+
+formation model's RMSE: 0.0482535408358
+bandgap model's RMSE: 0.481415068098
+
+formation model's RMLSE: 0.0383325968227
+bandgap model's RMLSE: 0.153830256087
+
+* Note my best model from sklearn had these paramaters:
+GradientBoostingRegressor(alpha=0.9, criterion='friedman_mse', init=None,
+             learning_rate=0.1, loss='ls', max_depth=3, max_features=None,
+             max_leaf_nodes=None, min_impurity_decrease=0.0,
+             min_impurity_split=None, min_samples_leaf=1,
+             min_samples_split=2, min_weight_fraction_leaf=0.0,
+             n_estimators=10000, presort='auto', random_state=None,
+             subsample=1.0, verbose=0, warm_start=False) 
+             
+According to: https://github.com/Microsoft/LightGBM/blob/master/docs/Parameters-Tuning.rst
+num_leaves, max_depth, min_data_in_leaf, max_bin, learning_rate, num_iterations seem to be the most important parameters
+
+'As I mentioned in the end, techniques like feature engineering and blending have a much greater impact than parameter tuning. For instance, I generally do some parameter tuning and then run 10 different models on same parameters but different seeds. Averaging their results generally gives a good boost to the performance of the model.'
+
+lightgbm_best3.csv (5,000 tree/1000 boost): 
+    'boosting_type': 'dart',
+    'objective': 'regression',
+    'metric': 'rmse',
+    'num_leaves': 100,
+    'num_iterations': 5000,
+    'learning_rate': 0.04,
+    'max_depth': 6,
+    'feature_fraction': 0.9,
+    'verbose': 0,
+    'min_child_weight': 0.8
+    
+formation training's rmse: 0.0231905
+bandgap training's rmse: 0.171081 
+
+formation model's RMSE: 0.0484716353392
+bandgap model's RMSE: 0.266533507296
+
+formation model's RMLSE: 0.0384579832935
+bandgap model's RMLSE: 0.0980030475517
+
+Training rmse is consistently in the 0.02 for formation and close to .1 for bandgap yet my test
+rmse is usually over double that. Method is exhibiting extreme overfitting.
+training form: 0.0273809
+training band: 0.133564
+formation model's RMSE: 0.0475457490078
+bandgap model's RMSE: 0.26029348151
+
+Dart
+0.0286473
+0.143445
+formation model's RMSE: 0.0479810149017
+bandgap model's RMSE: 0.267749367672
+Expected LB: 0.0685
+Expected LB: 0.0682854617082
+
+
+gbdt
+Expected LB: 0.0798307033621
+Expected LB: 0.0807100896217
+Expected LB: 0.0767276725219
+Expected LB: 0.0767276725219
+Expected LB: 0.0777199683198
+Expected LB: 0.0779344564017
+Submitted to LB and got a worse score than sample submission.......
+
+xgboost
+defaults:
+params = {
+    'max_depth':6, 
+    'eta':0.3, 
+    'silent':0, 
+    'objective':'reg:linear',
+    'tree_method': 'auto',
+    'eval_metric': 'rmse'}
+num_boost_rounds = 10
+form rmsle:  0.0395322095546
+band rmsle:  0.0949292889882
+Expected LB:  0.0672307492714
+
+nbr = 20
+form rmsle:  0.0387363031718
+band rmsle:  0.0953887432133
+Expected LB:  0.0670625231925
+
+nbr = 15
+form rmsle:  0.0384936021168
+band rmsle:  0.0946658086449
+Expected LB:  0.0665797053809
+
+nbr = 12
+form rmsle:  0.0388097681093
+band rmsle:  0.0942696725541
+Expected LB:  0.0665397203317
+
+New best model: 
+params = {
+    'max_depth':6, 
+    'eta':0.3, 
+    'silent':0, 
+    'objective':'reg:linear',
+    'tree_method': 'auto',
+    'eval_metric': 'rmse'}
+
+num_boost_round = 12
+
+0.029214
+0.144177
+form-rmse:  0.0488291703423
+band-rmse:  0.248613316491
+Expected LB:  0.0665397203317
+
+
+lambda: 2
+0.030276
+0.152159
+form-rmse:  0.0483358885856
+band-rmse:  0.245484610912
+Expected LB:  0.0659967912144
+
+lambda: 3
+0.030799
+0.156465
+form-rmse:  0.0478669549241
+band-rmse:  0.241428949435
+Expected LB:  0.0649845477464
+
+alpha:1 remove it
+0.03714
+0.172283
+form-rmse:  0.0504333907343
+band-rmse:  0.250771071008
+Expected LB:  0.0674033589065
+
+gamma:0.1
+0.042619
+0.159278
+form-rmse:  0.0509962855512
+band-rmse:  0.246587156326
+Expected LB:  0.0674768100606
+
+gamma:0.5
+0.055718
+0.177106
+form-rmse:  0.0601306094459
+band-rmse:  0.244594888752
+Expected LB:  0.0707906099277
+
+gamma:1
+0.066173
+0.194844
+form-rmse:  0.0690333247607
+band-rmse:  0.249977902927
+Expected LB:  0.0752080510184
+
+gamma:0.01
+0.033599
+0.156662
+form-rmse:  0.0481604199674
+band-rmse:  0.24118180034
+Expected LB:  0.0650418620459
+
+best model: 
+params = {
+    'max_depth':6, 
+    'eta':0.3, 
+    'silent':0, 
+    'objective':'reg:linear',
+    'tree_method': 'auto',
+    'eval_metric': 'rmse'}
+
+num_boost_round = 12
+
+0.029214
+0.144177
+form-rmse:  0.0488291703423
+band-rmse:  0.248613316491
+Expected LB:  0.0665397203317
+
+Best model, tree_method:hist
+0.029936
+0.145484
+form-rmse:  0.0484441044789
+band-rmse:  0.252687128137
+Expected LB:  0.0673705180448
+
+rounds=13
+0.029339
+0.140699
+form-rmse:  0.0481643386935
+band-rmse:  0.25306304855
+Expected LB:  0.0673344069177
+
+with dart booster:
+0.029339
+0.140698
+form-rmse:  0.048164336966
+band-rmse:  0.253063052635
+Expected LB:  0.0673344071047
+
+# Configuration
+params = {
+    'booster': 'gbtree',
+    'max_depth':6,
+    'min_child_weight': 50,
+    'eta':0.3, 
+    'silent':0, 
+    'objective':'reg:linear',
+    'tree_method': 'auto',
+    'eval_metric': 'rmse',
+    'random_seed': 100}
+
+num_boost_round = 12
+
+0.035652
+0.189702
+form-rmse:  0.0468167871708
+band-rmse:  0.24377773394
+Expected LB:  0.0643792745951
+
+# Configuration
+params = {
+    'booster': 'gbtree',
+    'max_depth':6,
+    'min_child_weight': 70,
+    'eta':0.2, 
+    'silent':0, 
+    'objective':'reg:linear',
+    'tree_method': 'hist',
+    'eval_metric': 'rmse'}
+
+num_boost_round = 50
+0.033048
+0.174623
+form-rmse:  0.0451334274313
+band-rmse:  0.239369139631
+Expected LB:  0.0633241966447
+
+# Configuration
+params = {
+    'booster': 'gbtree',
+    'max_depth':6,
+    'min_child_weight': 70,
+    'eta':0.2, 
+    'silent':0, 
+    'objective':'reg:linear',
+    'tree_method': 'hist',
+    'eval_metric': 'rmse',
+    'colsample_bytree': 0.9}
+    
+0.033014
+0.175495
+form-rmse:  0.0449154492942
+band-rmse:  0.239908393611
+Expected LB:  0.0632095313187
+
+random_seed=400 is much closer...is it affecting model?
+params = {
+    'booster': 'gbtree',
+    'max_depth':6,
+    'min_child_weight': 70,
+    'eta':0.2, 
+    'silent':0, 
+    'objective':'reg:linear',
+    'tree_method': 'hist',
+    'eval_metric': 'rmse',
+    'colsample_bytree': 0.9}
+
+num_boost_round = 40
+0.035352
+0.18718
+form-rmse:  0.0395569031401
+band-rmse:  0.223108596525
+Expected LB:  0.0599274861609
+
+Mean:  0.0601377045592
+Standard deviation:  0.00585394558156
+
+Mean:  0.0600198601761
+Standard deviation:  0.00614727900092
+    
